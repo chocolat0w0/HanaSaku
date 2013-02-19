@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 
 public class FlowersController {

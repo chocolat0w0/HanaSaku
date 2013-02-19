@@ -1,6 +1,5 @@
 package com.chocolat.hanasaku;
 
-import java.util.Date;
 import java.util.Timer;
 
 import android.app.Activity;
