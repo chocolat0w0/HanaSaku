@@ -15,11 +15,6 @@ public class FlowersController {
 	private ArrayList<Object> flowersList;
 	private RelativeLayout viewGroup;
 	
-	//TODO: 後で消す
-	String eventX;
-	String flowerX;
-	int[] location = new int[2];
-
 	public FlowersController(RelativeLayout viewGroup) {
 		flowersList = new ArrayList<Object>();
 		this.viewGroup = viewGroup;
@@ -31,12 +26,6 @@ public class FlowersController {
 			Flower flower = new Flower(context, event);
 			flowersList.add(flower);
 			viewGroup.addView(flower);
-			// TODO: デバッグ用にデータ表示、後で消去すること
-			eventX = Float.toString(event.getX());
-			flower.getLocationOnScreen(location);
-			flowerX = Float.toString(location[0]);
-			Toast myToast = Toast.makeText(context, eventX + flowerX, Toast.LENGTH_SHORT);
-			myToast.show();
 			
 			viewGroup.invalidate();
 		}
@@ -57,6 +46,11 @@ public class FlowersController {
 			}
 		}
 		return (Flower)flowersList.get(nearestFlowerIndex);
+	}
+
+	public void remove(Flower flower) {
+		flowersList.remove(flower);
+		viewGroup.removeView(flower);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.chocolat.hanasaku;
 
+import java.util.Date;
 import java.util.Timer;
 
 import android.app.Activity;
@@ -9,6 +10,9 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity {
 
+	private static final long TIMER_START_MS = 100;
+	private static final long TIMER_PERIOD_MS = 1000;
+	
 	private RelativeLayout viewGroup;
 	private Butterfly butterfly;
 	private FlowersController flowersController;
@@ -25,7 +29,7 @@ public class MainActivity extends Activity {
 		setContentView(viewGroup);
 		mTimer = new Timer(true);
 		timerController = new TimerController(butterfly, viewGroup);
-		mTimer.schedule(timerController, 100, 100);
+		mTimer.schedule(timerController, TIMER_START_MS, TIMER_PERIOD_MS);
 		
 	}
 
