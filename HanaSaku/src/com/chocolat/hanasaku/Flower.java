@@ -22,9 +22,18 @@ public class Flower extends View {
 		setColor();
 		setImage();
 	}
+	
+	protected float getImageX() {
+		return this.imageX;
+	}
 
+	protected float getImageY() {
+		return this.imageY;
+	}
+	
 	private void setImage() {
 		// TODO 自動生成されたメソッド・スタブ
+		// colorに応じた画像を読み込ませる
 		
 	}
 
@@ -42,12 +51,17 @@ public class Flower extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.dummy_flower);
-		canvas.drawBitmap(mBitmap, imageX - mBitmap.getWidth() / 2, imageY - mBitmap.getHeight() / 2, mPaint);
+		canvas.drawBitmap(mBitmap,
+				imageX - mBitmap.getWidth() / 2,
+				imageY - mBitmap.getHeight() / 2,
+				mPaint);
 	}
 
-	public float calcDistance(float butterflyX, float butterflyY) {
-		return (float) Math.sqrt(Math.pow(imageX-butterflyX, 2) + Math.pow(imageY-butterflyY, 2));
+	protected float calcDistance(float butterflyX, float butterflyY) {
+		return (float) Math.sqrt(Math.pow(imageX-butterflyX, 2)
+				+ Math.pow(imageY-butterflyY, 2));
 		
 	}
+
 
 }
