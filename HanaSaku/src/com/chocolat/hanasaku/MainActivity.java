@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 public class MainActivity extends Activity {
 
 	private static final long TIMER_START_MS = 100;
-	private static final long TIMER_PERIOD_MS = 1000;
+	private static final long TIMER_PERIOD_MS = 200;
 	
 	private RelativeLayout viewGroup;
 	private Butterfly butterfly;
@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
 		//TODO: 判定ロジックが汚い・・
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			if (butterfly.isExisted(event)) {
-					butterfly.setStatusToCatched();
+					butterfly.setStatusToDragged();
 			}
 			else {
 				flowersController.add(this, event);
@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
 			butterfly.moveByDrag(event);
 		}
 		else if (event.getAction() == MotionEvent.ACTION_UP) {
-			butterfly.setStatusToUncatched();
+			butterfly.setStatusToUndragged();
 		}
 		return true;
 	}
