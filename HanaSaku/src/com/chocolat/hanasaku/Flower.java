@@ -1,25 +1,28 @@
 package com.chocolat.hanasaku;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
 
+@SuppressLint("ViewConstructor")
 public class Flower extends View {
 	private float imageX = 0;
 	private float imageY = 0;
-	private int color = 0;
 	private Paint mPaint;
 	private Bitmap mBitmap;
+	private int color;
 
 	public Flower(Context context, MotionEvent event) {
 		super(context);
-		mPaint = new Paint();
+		mPaint = new Paint(Color.WHITE);
 		setPosition(event);
-		setColor();
+		setRandomColor();
 		setImage();
 	}
 	
@@ -31,16 +34,36 @@ public class Flower extends View {
 		return this.imageY;
 	}
 	
+	protected int getColor() {
+		return this.color;
+	}
+	
 	private void setImage() {
 		// TODO 自動生成されたメソッド・スタブ
 		// colorに応じた画像を読み込ませる
 		
 	}
 
-	private void setColor() {
+	private void setRandomColor() {
 		// TODO 自動生成されたメソッド・スタブ
-		this.color = 0;
-		
+		color = (int)(Math.random() * 3);
+		int resorce = 0;
+		// TODO: 色数が増えても対応できるようにする
+		// TODO: 色と画像のmappingを別に持つようにする
+		switch (color) {
+		case 0:
+			resorce = R.drawable.flower_red;
+			break;
+		case 1:
+			resorce = R.drawable.flower_green;
+			break;
+		case 2:
+			resorce = R.drawable.flower_blue;
+			break;
+		default:
+			break;
+		}
+		mBitmap = BitmapFactory.decodeResource(getResources(), resorce);
 	}
 
 	private void setPosition(MotionEvent event) {
@@ -50,7 +73,6 @@ public class Flower extends View {
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.dummy_flower);
 		canvas.drawBitmap(mBitmap,
 				imageX - mBitmap.getWidth() / 2,
 				imageY - mBitmap.getHeight() / 2,

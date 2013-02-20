@@ -9,11 +9,14 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
 
+@SuppressLint("ViewConstructor")
 public class Butterfly extends View{
 
 	private static final float INITIAL_IMAGEX = 30;
 	private static final float INITIAL_IMAGEY = 30;
 	private static final float OVERLAP_AREA = 15;
+	private static final float SPEED = 5;
+	
 	
 	private FlowersController flowersController;
 	private float imageCenterX = INITIAL_IMAGEX;
@@ -22,18 +25,17 @@ public class Butterfly extends View{
 	private float imageRightX = 0;
 	private float imageTopY = 0;
 	private float imageBottomY = 0;
-	private int color = 0;
-	private boolean isCatched = false;
+	private boolean isDragged = false;
 	private Bitmap mBitmap;
 	private Paint mPaint;
+	private int resorce;
 	
-	@SuppressLint("DrawAllocation")
 	public Butterfly(Context context, FlowersController flowersController) {
 		super(context);
 		this.flowersController = flowersController;
 		this.mPaint = new Paint();
-		mBitmap = BitmapFactory.decodeResource(getResources(),
-				R.drawable.butterfly);
+		resorce = R.drawable.butterfly;
+		mBitmap = BitmapFactory.decodeResource(getResources(), resorce);
 		refreshImageSideXY(imageCenterX, imageCenterY);
 	}
 	
@@ -45,16 +47,16 @@ public class Butterfly extends View{
 				mPaint);
 	}
 
-	public void setStatusToCatched() {
-		this.isCatched = true;
+	public void setStatusToDragged() {
+		this.isDragged = true;
 	}
 
-	public void setStatusToUncatched() {
-		this.isCatched = false;
+	public void setStatusToUndragged() {
+		this.isDragged = false;
 	}
 
 	public void moveByDrag(MotionEvent event) {
-		if (isCatched) {
+		if (isDragged) {
 			this.imageCenterX = event.getX();
 			this.imageCenterY = event.getY();
 			refreshImageSideXY(imageCenterX, imageCenterY);
@@ -79,7 +81,7 @@ public class Butterfly extends View{
 	}
 
 	public void flyToNearestFlower() {
-		if (!this.isCatched) {
+		if (!this.isDragged) {
 			Flower nextFlower =
 					flowersController
 					.searchNearest(imageCenterX, imageCenterY);
@@ -91,15 +93,36 @@ public class Butterfly extends View{
 			if(nextFlower.calcDistance(imageCenterX, imageCenterY)
 					< OVERLAP_AREA) {
 				// TODO: 色変更
+				this.changeMyColor(nextFlower.getColor());
 				flowersController.remove(nextFlower);
 			}
 		}
 	}
 
+	private void changeMyColor(int colorToBe) {
+		// TODO 自動生成されたメソッド・スタブ
+		switch(colorToBe) {
+		case 0:
+			resorce = R.drawable.butterfly_red;
+			break;
+		case 1:
+			resorce = R.drawable.butterfly_green;
+			break;
+		case 2:
+			resorce = R.drawable.butterfly_blue;
+			break;
+		default:
+			break;
+		}
+		// TODO: ２度目の登場！
+		mBitmap = BitmapFactory.decodeResource(getResources(), resorce);
+		
+	}
+
 	// TODO: 移動ロジック（速度調整）は仮
 	private void setNextFramePosition(Flower nextFlower) {
-		imageCenterX += (nextFlower.getImageX() - imageCenterX) / 5;
-		imageCenterY += (nextFlower.getImageY() - imageCenterY) / 5;
+		imageCenterX += (nextFlower.getImageX() - imageCenterX) / SPEED;
+		imageCenterY += (nextFlower.getImageY() - imageCenterY) / SPEED;
 		refreshImageSideXY(imageCenterX, imageCenterY);
 	}
 
