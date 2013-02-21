@@ -21,17 +21,35 @@ public class FlowersController {
 
 	@SuppressLint("NewApi")
 	public void add(Context context, MotionEvent event) {
-		if (flowersList.size() < MAX_FLOWER_NUMBER) {
-			Flower flower = new Flower(context, event);
-			flowersList.add(flower);
-			viewGroup.addView(flower);
-			
-			viewGroup.invalidate();
+		if (MAX_FLOWER_NUMBER <= flowersList.size()) {
+			return;
 		}
+		int color = (int)(Math.random() * 3);
+		int resorceID = 0;
+		// TODO: 色数が増えても対応できるようにする
+		// TODO: 色と画像のmappingを別に持つようにする
+		switch (color) {
+		case 0:
+			resorceID = R.drawable.flower_red;
+			break;
+		case 1:
+			resorceID = R.drawable.flower_green;
+			break;
+		case 2:
+			resorceID = R.drawable.flower_blue;
+			break;
+		default:
+			break;
+		}
+
+		Flower flower = new Flower(context, event, resorceID);
+		flowersList.add(flower);
+		viewGroup.addView(flower);
+		
+		viewGroup.invalidate();
 	}
 
 	public Flower searchNearest(float butterflyX, float butterflyY) {
-		// TODO 自動生成されたメソッド・スタブ
 		float distance = 1000;
 		int nearestFlowerIndex = 0;
 		if (flowersList.size() == 0) {

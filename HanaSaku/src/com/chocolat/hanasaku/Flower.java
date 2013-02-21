@@ -5,78 +5,42 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
 
 @SuppressLint("ViewConstructor")
-public class Flower extends View {
+public class Flower extends View implements ColorInterface {
 	private float imageX = 0;
 	private float imageY = 0;
 	private Paint mPaint;
 	private Bitmap mBitmap;
-	private int color;
+	private int resorceID;
 
-	public Flower(Context context, MotionEvent event) {
+	public Flower(Context context, MotionEvent event, int resorceID) {
 		super(context);
-		mPaint = new Paint(Color.WHITE);
+		mPaint = new Paint();
 		setPosition(event);
-		setRandomColor();
+		this.resorceID = resorceID;
+		setImage(resorceID);
 	}
 	
-	protected float getImageX() {
+	private void setImage(int resorceID) {
+		mBitmap = BitmapFactory.decodeResource(getResources(), resorceID);		
+	}
+
+	public float getImageX() {
 		return this.imageX;
 	}
 
-	protected float getImageY() {
+	public float getImageY() {
 		return this.imageY;
 	}
 	
-	protected int getColor() {
-		return this.color;
+	public int getColor() {
+		return this.resorceID;
 	}
 	
-	private void setRandomColor() {
-		// TODO 自動生成されたメソッド・スタブ
-		color = (int)(Math.random() * 3);
-		int resorce = 0;
-		// TODO: 色数が増えても対応できるようにする
-		// TODO: 色と画像のmappingを別に持つようにする
-		switch (color) {
-		case 0:
-			resorce = R.drawable.flower_red;
-			break;
-		case 1:
-			resorce = R.drawable.flower_green;
-			break;
-		case 2:
-			resorce = R.drawable.flower_blue;
-			break;
-		default:
-			break;
-		}
-		mBitmap = BitmapFactory.decodeResource(getResources(), resorce);
-	}
-	
-	protected void changeButterflyColor(Butterfly butterfly) {
-		int resorce = 0;
-		switch (color) {
-		case 0:
-			resorce = R.drawable.butterfly_red;
-			break;
-		case 1:
-			resorce = R.drawable.butterfly_green;
-			break;
-		case 2:
-			resorce = R.drawable.butterfly_blue;
-			break;
-		default:
-			break;
-		}
-		butterfly.setColor(resorce);
-	}
-
 	private void setPosition(MotionEvent event) {
 		this.imageX = event.getX();
 		this.imageY = event.getY();
