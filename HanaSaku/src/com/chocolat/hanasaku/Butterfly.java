@@ -17,7 +17,6 @@ public class Butterfly extends View{
 	private static final float OVERLAP_AREA = 15;
 	private static final float SPEED = 5;
 	
-	
 	private FlowersController flowersController;
 	private float imageCenterX = INITIAL_IMAGEX;
 	private float imageCenterY = INITIAL_IMAGEY;
@@ -92,7 +91,7 @@ public class Butterfly extends View{
 
 			if(nextFlower.calcDistance(imageCenterX, imageCenterY)
 					< OVERLAP_AREA) {
-				nextFlower.changeButterflyColor(this);
+				changeColorJustLike(nextFlower);
 				flowersController.remove(nextFlower);
 			}
 		}
@@ -100,6 +99,24 @@ public class Butterfly extends View{
 
 	public void setColor(int resorce) {
 		mBitmap = BitmapFactory.decodeResource(getResources(), resorce);
+	}
+	
+	private void changeColorJustLike(ColorInterface colorInterface) {
+		int resorceID = 0;
+		switch (colorInterface.getColor()) {
+		case R.drawable.flower_red:
+			resorceID = R.drawable.butterfly_red;
+			break;
+		case R.drawable.flower_green:
+			resorceID = R.drawable.butterfly_green;
+			break;
+		case R.drawable.flower_blue:
+			resorceID = R.drawable.butterfly_blue;
+			break;
+		default:
+			break;
+		}
+		setColor(resorceID);
 	}
 
 	// TODO: 移動ロジック（速度調整）は仮
