@@ -23,7 +23,6 @@ public class Flower extends View {
 		mPaint = new Paint(Color.WHITE);
 		setPosition(event);
 		setRandomColor();
-		setImage();
 	}
 	
 	protected float getImageX() {
@@ -38,12 +37,6 @@ public class Flower extends View {
 		return this.color;
 	}
 	
-	private void setImage() {
-		// TODO 自動生成されたメソッド・スタブ
-		// colorに応じた画像を読み込ませる
-		
-	}
-
 	private void setRandomColor() {
 		// TODO 自動生成されたメソッド・スタブ
 		color = (int)(Math.random() * 3);
@@ -64,6 +57,24 @@ public class Flower extends View {
 			break;
 		}
 		mBitmap = BitmapFactory.decodeResource(getResources(), resorce);
+	}
+	
+	protected void changeButterflyColor(Butterfly butterfly) {
+		int resorce = 0;
+		switch (color) {
+		case 0:
+			resorce = R.drawable.butterfly_red;
+			break;
+		case 1:
+			resorce = R.drawable.butterfly_green;
+			break;
+		case 2:
+			resorce = R.drawable.butterfly_blue;
+			break;
+		default:
+			break;
+		}
+		butterfly.setColor(resorce);
 	}
 
 	private void setPosition(MotionEvent event) {

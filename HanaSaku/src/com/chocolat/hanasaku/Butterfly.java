@@ -26,7 +26,7 @@ public class Butterfly extends View{
 	private float imageTopY = 0;
 	private float imageBottomY = 0;
 	private boolean isDragged = false;
-	private Bitmap mBitmap;
+	protected Bitmap mBitmap;
 	private Paint mPaint;
 	private int resorce;
 	
@@ -92,31 +92,14 @@ public class Butterfly extends View{
 
 			if(nextFlower.calcDistance(imageCenterX, imageCenterY)
 					< OVERLAP_AREA) {
-				// TODO: 色変更
-				this.changeMyColor(nextFlower.getColor());
+				nextFlower.changeButterflyColor(this);
 				flowersController.remove(nextFlower);
 			}
 		}
 	}
 
-	private void changeMyColor(int colorToBe) {
-		// TODO 自動生成されたメソッド・スタブ
-		switch(colorToBe) {
-		case 0:
-			resorce = R.drawable.butterfly_red;
-			break;
-		case 1:
-			resorce = R.drawable.butterfly_green;
-			break;
-		case 2:
-			resorce = R.drawable.butterfly_blue;
-			break;
-		default:
-			break;
-		}
-		// TODO: ２度目の登場！
+	public void setColor(int resorce) {
 		mBitmap = BitmapFactory.decodeResource(getResources(), resorce);
-		
 	}
 
 	// TODO: 移動ロジック（速度調整）は仮
