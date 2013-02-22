@@ -29,12 +29,10 @@ public class MainActivity extends Activity {
 		mTimer = new Timer(true);
 		timerController = new TimerController(butterfly, viewGroup);
 		mTimer.schedule(timerController, TIMER_START_MS, TIMER_PERIOD_MS);
-		
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		//TODO: 判定ロジックが汚い・・
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			if (butterfly.isExisted(event)) {
 					butterfly.setStatusToDragged();

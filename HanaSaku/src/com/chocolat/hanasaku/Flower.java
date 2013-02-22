@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 @SuppressLint("ViewConstructor")
-public class Flower extends View implements ColorInterface {
+public class Flower extends View{
 	private float imageX = 0;
 	private float imageY = 0;
 	private Paint mPaint;
@@ -26,7 +26,7 @@ public class Flower extends View implements ColorInterface {
 	}
 	
 	private void setImage(ColorImageMap.ColorList color) {
-		mBitmap = BitmapFactory.decodeResource(getResources(), ColorImageMap.flowerImageMap.get(color));
+		mBitmap = BitmapFactory.decodeResource(getResources(), ColorImageMap.FLOWER_IMAGE_MAP.get(color));
 	}
 
 	public float getImageX() {
@@ -54,10 +54,14 @@ public class Flower extends View implements ColorInterface {
 				mPaint);
 	}
 
-	protected float calcDistance(float butterflyX, float butterflyY) {
+	public float calcDistance(float butterflyX, float butterflyY) {
 		return (float) Math.sqrt(Math.pow(imageX-butterflyX, 2)
 				+ Math.pow(imageY-butterflyY, 2));
 		
+	}
+	
+	public void copyColorTo(ColorInterface changed) {
+		changed.setColor(color);
 	}
 
 
