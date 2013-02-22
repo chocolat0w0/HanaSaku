@@ -97,29 +97,14 @@ public class Butterfly extends View{
 		}
 	}
 
-	public void setColor(int resorce) {
-		mBitmap = BitmapFactory.decodeResource(getResources(), resorce);
+	private void setImage(ColorImageMap.ColorList color) {
+		mBitmap = BitmapFactory.decodeResource(getResources(), ColorImageMap.butterflyImageMap.get(color));
 	}
 	
 	private void changeColorJustLike(ColorInterface colorInterface) {
-		int resorceID = 0;
-		switch (colorInterface.getColor()) {
-		case R.drawable.flower_red:
-			resorceID = R.drawable.butterfly_red;
-			break;
-		case R.drawable.flower_green:
-			resorceID = R.drawable.butterfly_green;
-			break;
-		case R.drawable.flower_blue:
-			resorceID = R.drawable.butterfly_blue;
-			break;
-		default:
-			break;
-		}
-		setColor(resorceID);
+		setImage(colorInterface.getColor());
 	}
 
-	// TODO: 移動ロジック（速度調整）は仮
 	private void setNextFramePosition(Flower nextFlower) {
 		imageCenterX += (nextFlower.getImageX() - imageCenterX) / SPEED;
 		imageCenterY += (nextFlower.getImageY() - imageCenterY) / SPEED;

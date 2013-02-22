@@ -15,18 +15,18 @@ public class Flower extends View implements ColorInterface {
 	private float imageY = 0;
 	private Paint mPaint;
 	private Bitmap mBitmap;
-	private int resorceID;
+	private ColorImageMap.ColorList color;
 
-	public Flower(Context context, MotionEvent event, int resorceID) {
+	public Flower(Context context, MotionEvent event, ColorImageMap.ColorList color) {
 		super(context);
 		mPaint = new Paint();
 		setPosition(event);
-		this.resorceID = resorceID;
-		setImage(resorceID);
+		this.color = color;
+		setImage(color);
 	}
 	
-	private void setImage(int resorceID) {
-		mBitmap = BitmapFactory.decodeResource(getResources(), resorceID);		
+	private void setImage(ColorImageMap.ColorList color) {
+		mBitmap = BitmapFactory.decodeResource(getResources(), ColorImageMap.flowerImageMap.get(color));
 	}
 
 	public float getImageX() {
@@ -37,8 +37,8 @@ public class Flower extends View implements ColorInterface {
 		return this.imageY;
 	}
 	
-	public int getColor() {
-		return this.resorceID;
+	public ColorImageMap.ColorList getColor() {
+		return this.color;
 	}
 	
 	private void setPosition(MotionEvent event) {

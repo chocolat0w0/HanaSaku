@@ -1,7 +1,6 @@
 package com.chocolat.hanasaku;
 
 import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.MotionEvent;
@@ -21,28 +20,27 @@ public class FlowersController {
 
 	@SuppressLint("NewApi")
 	public void add(Context context, MotionEvent event) {
+		Flower flower = null;
 		if (MAX_FLOWER_NUMBER <= flowersList.size()) {
 			return;
 		}
-		int color = (int)(Math.random() * 3);
-		int resorceID = 0;
+		int random = (int)(Math.random() * 3);
 		// TODO: 色数が増えても対応できるようにする
 		// TODO: 色と画像のmappingを別に持つようにする
-		switch (color) {
+		switch (random) {
 		case 0:
-			resorceID = R.drawable.flower_red;
+			flower = new Flower(context, event, ColorImageMap.ColorList.RED);
 			break;
 		case 1:
-			resorceID = R.drawable.flower_green;
+			flower = new Flower(context, event, ColorImageMap.ColorList.GREEN);
 			break;
 		case 2:
-			resorceID = R.drawable.flower_blue;
+			flower = new Flower(context, event, ColorImageMap.ColorList.BLUE);
 			break;
 		default:
 			break;
 		}
 
-		Flower flower = new Flower(context, event, resorceID);
 		flowersList.add(flower);
 		viewGroup.addView(flower);
 		
