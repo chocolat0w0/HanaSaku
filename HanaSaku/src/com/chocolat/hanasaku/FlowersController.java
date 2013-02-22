@@ -1,7 +1,6 @@
 package com.chocolat.hanasaku;
 
 import java.util.ArrayList;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
@@ -18,35 +17,17 @@ public class FlowersController {
 		this.viewGroup = viewGroup;
 	}
 
-	@SuppressLint("NewApi")
 	public void add(Context context, MotionEvent event) {
-		Flower flower = null;
 		if (MAX_FLOWER_NUMBER <= flowersList.size()) {
 			return;
 		}
-		int random = (int)(Math.random() * 3);
-		// TODO: 色数が増えても対応できるようにする
-		// TODO: 色と画像のmappingを別に持つようにする
-		switch (random) {
-		case 0:
-			flower = new Flower(context, event, ColorImageMap.ColorList.RED);
-			break;
-		case 1:
-			flower = new Flower(context, event, ColorImageMap.ColorList.GREEN);
-			break;
-		case 2:
-			flower = new Flower(context, event, ColorImageMap.ColorList.BLUE);
-			break;
-		default:
-			break;
-		}
-
+		Flower flower = new Flower(context, event, ColorImageMap.random());
 		flowersList.add(flower);
 		viewGroup.addView(flower);
-		
 		viewGroup.invalidate();
 	}
 
+	// TODO: アルゴリズムもっときれいに書けないかな？
 	public Flower searchNearest(float butterflyX, float butterflyY) {
 		float distance = 1000;
 		int nearestFlowerIndex = 0;

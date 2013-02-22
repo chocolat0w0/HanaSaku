@@ -1,5 +1,7 @@
 package com.chocolat.hanasaku;
 
+import com.chocolat.hanasaku.ColorImageMap.ColorList;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,7 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 @SuppressLint("ViewConstructor")
-public class Butterfly extends View{
+public class Butterfly extends View implements ColorInterface{
 
 	private static final float INITIAL_IMAGEX = 30;
 	private static final float INITIAL_IMAGEY = 30;
@@ -91,24 +93,25 @@ public class Butterfly extends View{
 
 			if(nextFlower.calcDistance(imageCenterX, imageCenterY)
 					< OVERLAP_AREA) {
-				changeColorJustLike(nextFlower);
+				nextFlower.copyColorTo(this);
 				flowersController.remove(nextFlower);
 			}
 		}
 	}
 
 	private void setImage(ColorImageMap.ColorList color) {
-		mBitmap = BitmapFactory.decodeResource(getResources(), ColorImageMap.butterflyImageMap.get(color));
+		mBitmap = BitmapFactory.decodeResource(getResources(), ColorImageMap.BUTTERFLY_IMAGE_MAP.get(color));
 	}
 	
-	private void changeColorJustLike(ColorInterface colorInterface) {
-		setImage(colorInterface.getColor());
-	}
-
 	private void setNextFramePosition(Flower nextFlower) {
 		imageCenterX += (nextFlower.getImageX() - imageCenterX) / SPEED;
 		imageCenterY += (nextFlower.getImageY() - imageCenterY) / SPEED;
 		refreshImageSideXY(imageCenterX, imageCenterY);
+	}
+
+	@Override
+	public void setColor(ColorList color) {
+		setImage(color);
 	}
 
 	
